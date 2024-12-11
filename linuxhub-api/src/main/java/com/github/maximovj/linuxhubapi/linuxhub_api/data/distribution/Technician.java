@@ -15,15 +15,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.ALWAYS)
-public class Technician {
+public class Technician 
+{
 
     @Field("ram")
     @Nullable
-    String ram;
+    Long ram;
     
     @Field("memory")
     @Nullable
-    String memory;
+    Long memory;
+    
+    @Field("speed")
+    @Nullable
+    Double speed;
     
     @Field("process")
     @Nullable

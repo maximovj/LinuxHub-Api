@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.github.maximovj.linuxhubapi.linuxhub_api.data.distribution.Technician;
 import com.github.maximovj.linuxhubapi.linuxhub_api.document.Distribution;
 import com.github.maximovj.linuxhubapi.linuxhub_api.repository.DistributionRepository;
 import com.github.maximovj.linuxhubapi.linuxhub_api.response.ComparationResponse;
@@ -115,8 +116,8 @@ public class ComparationServiceImpl implements IComparationServiceImpl
         if(distro_before.get().getTechnician() != null &&
         distro_after.get().getTechnician() != null) {
             HashMap<String, Object> better = new HashMap<>();
-            better.put("ram", "1GB");
-            better.put("memory", "15GB");
+            better.put("ram", this.comparationRam(distro_before.get().getTechnician(), distro_after.get().getTechnician()));
+            better.put("memory", this.comparationMemory(distro_before.get().getTechnician(), distro_after.get().getTechnician()));
             better.put("proccess", "AMD 2");
             this.data.put("better", better);
         }
@@ -124,6 +125,14 @@ public class ComparationServiceImpl implements IComparationServiceImpl
         return this.buildSuccessResponse("Comparado exitosamnte", this.data);
     }
 
-    
+    private Long comparationRam(Technician a, Technician b)
+    {
+        return a.getRam() < b.getRam() ? a.getRam() : b.getRam();
+    }
+
+    private Long comparationMemory(Technician a, Technician b)
+    {
+        return a.getMemory() < b.getMemory() ? a.getMemory() : b.getMemory();
+    }    
     
 }
