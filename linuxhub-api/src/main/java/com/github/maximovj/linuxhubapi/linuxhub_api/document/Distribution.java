@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.maximovj.linuxhubapi.linuxhub_api.data.Download;
-import com.github.maximovj.linuxhubapi.linuxhub_api.data.Technician;
+import com.github.maximovj.linuxhubapi.linuxhub_api.data.distribution.Download;
+import com.github.maximovj.linuxhubapi.linuxhub_api.data.distribution.Technician;
 
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;

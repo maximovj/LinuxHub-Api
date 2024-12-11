@@ -1,4 +1,4 @@
-package com.github.maximovj.linuxhubapi.linuxhub_api.data;
+package com.github.maximovj.linuxhubapi.linuxhub_api.data.distribution;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -15,18 +15,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.ALWAYS)
-public class Technician {
+public class Download {
 
-    @Field("ram")
+    @Field("link")
     @Nullable
-    String ram;
+    String link;
+
+    @Field("format")
+    @Nullable
+    String format;
     
-    @Field("memory")
+    @Field("size")
     @Nullable
-    String memory;
-    
-    @Field("process")
-    @Nullable
-    String process;
+    String size;
     
 }
