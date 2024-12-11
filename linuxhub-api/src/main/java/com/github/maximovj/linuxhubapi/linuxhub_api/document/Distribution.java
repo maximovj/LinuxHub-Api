@@ -11,8 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.Download;
-import com.mongodb.lang.Nullable;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,27 +25,34 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(fluent = false, chain = true)
 @Builder
+@JsonInclude(JsonInclude.Include.ALWAYS) // Excluye campos nulos de la serialización
 public class Distribution {
 
     @Id
     String id;
 
     @Field("name")
+    @Nullable
     String name;
     
     @Field("description")
+    @Nullable
     String description;
     
     @Field("company")
+    @Nullable
     String company;
     
     @Field("website")
+    @Nullable
     String website;
     
     @Field("tags")
+    @Nullable
     List<String> tags;
     
     @Field("downloads")
+    @Nullable
     List<Download> downloads;
 
     @CreatedDate
@@ -53,5 +60,4 @@ public class Distribution {
 
     @LastModifiedDate
     Instant updated_at;
-    
 }
