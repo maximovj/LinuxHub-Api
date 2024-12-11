@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.Download;
+import com.github.maximovj.linuxhubapi.linuxhub_api.data.Technician;
 
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
@@ -54,6 +55,10 @@ public class Distribution {
     @Field("downloads")
     @Nullable
     List<Download> downloads;
+
+    @Field("technician")
+    @Nullable
+    Technician technician;
 
     @CreatedDate
     Instant created_at;
