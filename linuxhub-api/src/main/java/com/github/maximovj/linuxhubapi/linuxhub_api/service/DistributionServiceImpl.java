@@ -2,6 +2,7 @@ package com.github.maximovj.linuxhubapi.linuxhub_api.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,17 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
 {
 
     private final DistributionRepository distribucionRepository;
+    private HashMap<String, Object> data;
     private DistributionResponse apiResponse;
+
+    public void init(String type, String uri) 
+    {
+        this.apiResponse = new DistributionResponse();
+        this.apiResponse.setType(type);
+        this.apiResponse.setUri(uri);
+        this.apiResponse.setBase_url("http://localhot:5808"+uri);
+        this.data = new HashMap<>();
+    }
 
     public ResponseEntity<DistributionResponse> buildSuccessResponse(String content, HashMap<String,Object> data) 
     {
@@ -31,7 +42,7 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
         this.apiResponse.setCode(HttpStatus.OK.value());
         this.apiResponse.setStatus("success");
         this.apiResponse.setSuccess(true);
-        this.apiResponse.setData(data);
+        this.apiResponse.setData(this.data);
         return ResponseEntity.ok(this.apiResponse);
     }
 
@@ -48,16 +59,31 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
     @Override
     public ResponseEntity<DistributionResponse> listDistribution() 
     {
-        this.apiResponse = new DistributionResponse();
-        this.apiResponse.setType("GET");
-        this.apiResponse.setUri("/v1/distribution");
-        this.apiResponse.setBase_url("http://localhot:5808/v1/distribution");
-        HashMap<String, Object> data = new HashMap<>();
-
+        this.init("GET", "/v1/distribution");
+        
         List<Distribution> list =  this.distribucionRepository.findAll();
-        data.put("items", list);
+        this.data.put("items", list);
 
         return this.buildSuccessResponse("Lista de distribuciones linux", data);
+    }
+
+    @Override
+    public ResponseEntity<DistributionResponse> deleteDistribution(String id) 
+    {
+        this.init("DELETE", "/v1/distribution/"+id);
+
+        if(id.isEmpty()) {
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Opps id no proporcionado");
+        }
+        
+        Optional<Distribution> distro = this.distribucionRepository.findById(id);
+        if(!distro.isPresent()) {
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Opps id no encontrado en el sistema");
+        }
+
+        this.data.put("item", distro.get());
+        this.distribucionRepository.delete(distro.get());
+        return this.buildSuccessResponse("Distribución de linux eliminado correctamente", data);
     }
     
 }

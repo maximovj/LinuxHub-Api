@@ -9,5 +9,8 @@ public interface IDistributionServiceImpl
 
     // Listar todas las distribucines linux
     public ResponseEntity<DistributionResponse> listDistribution();
+
+    // Eliminar una distribución de linux mediante _id
+    public ResponseEntity<DistributionResponse> deleteDistribution(String id);
     
 }
