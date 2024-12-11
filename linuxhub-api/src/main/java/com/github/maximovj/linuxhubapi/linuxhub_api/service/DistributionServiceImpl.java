@@ -85,5 +85,14 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
         this.distribucionRepository.delete(distro.get());
         return this.buildSuccessResponse("Distribución de linux eliminado correctamente", data);
     }
+
+    @Override
+    public ResponseEntity<DistributionResponse> createDistribution(Distribution body) 
+    {
+        this.init("POST", "/v1/distribution");
+        this.data.put("item", body);
+        this.distribucionRepository.save(body);
+        return this.buildSuccessResponse("Distribución linux creado exitosamente", data);
+    }
     
 }
