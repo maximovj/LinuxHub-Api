@@ -3,7 +3,7 @@ package com.github.maximovj.linuxhubapi.linuxhub_api.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IDistribucionServiceImpl;
+import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IDistributionServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/v1")
-public class DistribucionRestController 
+public class DistributionRestController 
 {
 
     @Autowired
-    private IDistribucionServiceImpl serviceImpl;
+    private IDistributionServiceImpl serviceImpl;
 
-    @GetMapping("/distribucion")
-    public String getDistribucion() {
-        return this.serviceImpl.getDistribucion();
+    @GetMapping("/distribution")
+    public String getDistritucion() {
+        return this.serviceImpl.getDistribution();
     }
     
 }

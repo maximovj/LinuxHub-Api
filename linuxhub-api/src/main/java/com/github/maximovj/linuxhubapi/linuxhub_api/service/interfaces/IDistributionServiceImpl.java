@@ -1,9 +1,9 @@
 package com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces;
 
-public interface IDistribucionServiceImpl 
+public interface IDistributionServiceImpl 
 {
 
     // Listar todas las distribucines linux
-    public String getDistribucion();
+    public String getDistribution();
     
 }

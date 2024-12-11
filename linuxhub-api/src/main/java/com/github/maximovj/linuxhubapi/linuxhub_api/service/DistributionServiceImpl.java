@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.Download;
-import com.github.maximovj.linuxhubapi.linuxhub_api.document.Distribucion;
-import com.github.maximovj.linuxhubapi.linuxhub_api.repository.DistribucionRepository;
-import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IDistribucionServiceImpl;
+import com.github.maximovj.linuxhubapi.linuxhub_api.document.Distribution;
+import com.github.maximovj.linuxhubapi.linuxhub_api.repository.DistributionRepository;
+import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IDistributionServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,17 +15,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DistribucionServiceImpl implements IDistribucionServiceImpl
+public class DistributionServiceImpl implements IDistributionServiceImpl
 {
 
-    private final DistribucionRepository distribucionRepository;
+    private final DistributionRepository distribucionRepository;
 
     @Override
-    public String getDistribucion() 
+    public String getDistribution() 
     {
         log.info("DistribucionServiceImpl::getDistribucion | Iniciando");
         
-        Distribucion d = Distribucion.builder()
+        Distribution d = Distribution.builder()
         .name("Ubuntu")
         .website("https://www.ubuntu.com")
         .description(null)

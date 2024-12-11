@@ -19,13 +19,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-@Document(collection = "distribucion")
+@Document(collection = "distribution")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(fluent = false, chain = true)
 @Builder
-public class Distribucion {
+public class Distribution {
 
     @Id
     String id;
