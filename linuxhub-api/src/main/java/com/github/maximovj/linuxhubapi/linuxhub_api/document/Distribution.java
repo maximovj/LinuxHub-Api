@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.distribution.Download;
+import com.github.maximovj.linuxhubapi.linuxhub_api.data.distribution.Feature;
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.distribution.Technician;
 
 import jakarta.annotation.Nullable;
@@ -40,14 +41,34 @@ public class Distribution {
     @Nullable
     String description;
     
-    @Field("company")
+    @Field("enterprise_support")
     @Nullable
-    String company;
-    
-    @Field("website")
+    String enterprise_support;
+
+    @Field("official_site")
     @Nullable
-    String website;
+    String official_site;
+
+    @Field("logo")
+    @Nullable
+    String logo;
+
+    @Field("processor")
+    @Nullable
+    String processor;
     
+    @Field("license")
+    @Nullable
+    String license; // GPL
+
+    @Field("feature")
+    @Nullable
+    Feature feature;
+
+    @Field("technician")
+    @Nullable
+    Technician technician;
+
     @Field("tags")
     @Nullable
     List<String> tags;
@@ -55,10 +76,6 @@ public class Distribution {
     @Field("downloads")
     @Nullable
     List<Download> downloads;
-
-    @Field("technician")
-    @Nullable
-    Technician technician;
 
     @CreatedDate
     Instant created_at;

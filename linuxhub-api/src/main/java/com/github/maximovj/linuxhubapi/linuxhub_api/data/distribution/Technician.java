@@ -18,20 +18,44 @@ import lombok.NoArgsConstructor;
 public class Technician 
 {
 
+    @Field("distrowatch_ranking")
+    @Nullable
+    Integer distrowatch_ranking; // En entero
+    
+    @Field("steam_popularity")
+    @Nullable
+    Integer steam_popularity; // En entero
+
     @Field("ram")
     @Nullable
-    Long ram;
+    Long ram; // En MB
     
-    @Field("memory")
+    @Field("disk")
     @Nullable
-    Long memory;
+    Long disk; // En MB
+    
+    @Field("installation_time")
+    @Nullable
+    Long installation_time; // En minutos (Decimal)
+    
+    @Field("configuration_time")
+    @Nullable
+    Long configuration_time; // En minutos (Decimal)
+    
+    @Field("boot_speed")
+    @Nullable
+    Long boot_speed; // En segundos (Decimal)
     
     @Field("speed")
     @Nullable
-    Double speed;
-    
-    @Field("process")
+    Double speed; // En segundos (Decimal)
+
+    @Field("ram_consumption_idle")
     @Nullable
-    String process;
-    
+    Long ram_consumption_idle; // En MB
+
+    @Field("cpu_consumption_idle")
+    @Nullable
+    Long cpu_consumption_idle; // En MB
+
 }

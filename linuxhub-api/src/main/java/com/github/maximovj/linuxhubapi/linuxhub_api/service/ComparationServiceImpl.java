@@ -97,6 +97,7 @@ public class ComparationServiceImpl implements IComparationServiceImpl
             return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops distribuciones no encontrados en el sistema", errors);
         }
         
+        /* 
         HashMap<String, Object> dataBeforeDistro = new HashMap<>();
         if(distro_before.get().getTechnician() != null) {
             dataBeforeDistro.put("ram", distro_before.get().getTechnician().getRam());
@@ -121,6 +122,7 @@ public class ComparationServiceImpl implements IComparationServiceImpl
             better.put("proccess", "AMD 2");
             this.data.put("better", better);
         }
+        */
 
         return this.buildSuccessResponse("Comparado exitosamnte", this.data);
     }
@@ -130,9 +132,9 @@ public class ComparationServiceImpl implements IComparationServiceImpl
         return a.getRam() < b.getRam() ? a.getRam() : b.getRam();
     }
 
-    private Long comparationMemory(Technician a, Technician b)
+    private Long comparationDisk(Technician a, Technician b)
     {
-        return a.getMemory() < b.getMemory() ? a.getMemory() : b.getMemory();
+        return a.getDisk() < b.getDisk() ? a.getDisk() : b.getDisk();
     }    
     
 }
