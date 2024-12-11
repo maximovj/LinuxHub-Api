@@ -39,6 +39,12 @@ public class DistributionRestController implements IDistributionServiceImpl
     public ResponseEntity<DistributionResponse> listDistribution() {
         return this.serviceImpl.listDistribution();
     }
+
+    @GetMapping("/distribution/{id}")
+    @Override
+    public ResponseEntity<DistributionResponse> findDistribution(@PathVariable String id) {
+        return this.serviceImpl.findDistribution(id);
+    }
     
     @DeleteMapping("/distribution/{id}")
     @Override

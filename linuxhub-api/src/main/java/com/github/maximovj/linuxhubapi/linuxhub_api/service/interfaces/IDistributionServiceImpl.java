@@ -16,5 +16,8 @@ public interface IDistributionServiceImpl
 
     // Crear una distribución de linux mediante json
     public ResponseEntity<DistributionResponse> createDistribution(Distribution body);
+
+    // Buscar una distribución de linux mediante _id
+    public ResponseEntity<DistributionResponse> findDistribution(String id);
     
 }

@@ -24,6 +24,7 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
 
     private final DistributionRepository distribucionRepository;
     private HashMap<String, Object> data;
+    private HashMap<String, Object> errors;
     private DistributionResponse apiResponse;
 
     public void init(String type, String uri) 
@@ -33,6 +34,7 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
         this.apiResponse.setUri(uri);
         this.apiResponse.setBase_url("http://localhot:5808"+uri);
         this.data = new HashMap<>();
+        this.errors = new HashMap<>();
     }
 
     public ResponseEntity<DistributionResponse> buildSuccessResponse(String content, HashMap<String,Object> data) 
@@ -46,13 +48,14 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
         return ResponseEntity.ok(this.apiResponse);
     }
 
-    public ResponseEntity<DistributionResponse> buildErrorResponse(HttpStatus status, String content) 
+    public ResponseEntity<DistributionResponse> buildErrorResponse(HttpStatus status, String content,  HashMap<String, Object> errors) 
     {
         this.apiResponse.setRes_title("API Distribution");
         this.apiResponse.setRes_content(content);
         this.apiResponse.setCode(status.value());
         this.apiResponse.setStatus("error");
         this.apiResponse.setSuccess(false);
+        this.apiResponse.setErrors(errors);
         return ResponseEntity.status(status).body(this.apiResponse);
     }
 
@@ -73,12 +76,12 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
         this.init("DELETE", "/v1/distribution/"+id);
 
         if(id.isEmpty()) {
-            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Opps id no proporcionado");
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Opps id no proporcionado", this.errors);
         }
         
         Optional<Distribution> distro = this.distribucionRepository.findById(id);
         if(!distro.isPresent()) {
-            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Opps id no encontrado en el sistema");
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Opps id no encontrado en el sistema", this.errors);
         }
 
         this.data.put("item", distro.get());
@@ -93,6 +96,26 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
         this.data.put("item", body);
         this.distribucionRepository.save(body);
         return this.buildSuccessResponse("Distribución linux creado exitosamente", data);
+    }
+
+    @Override
+    public ResponseEntity<DistributionResponse> findDistribution(String id) 
+    {
+        this.init("GET", "/v1/distribution/"+id);
+
+        if(id.isEmpty()) {
+            this.errors.put("id", "El id ("+id+") es obligatorio");
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops id es requerido", this.errors);
+        }    
+        
+        Optional<Distribution> distro = this.distribucionRepository.findById(id);
+        if(!distro.isPresent()) {
+            this.errors.put("id", "El id ("+id+") no fue encontrado");
+            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops id no encontrado en el sistema", this.errors);
+        }
+
+        this.data.put("item", distro.get());
+        return this.buildSuccessResponse("Distribución de linux encotrado exitosamente", this.data);
     }
     
 }
