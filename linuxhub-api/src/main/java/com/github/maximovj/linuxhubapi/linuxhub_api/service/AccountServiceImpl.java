@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -182,6 +183,14 @@ public class AccountServiceImpl implements IAccountServiceImpl
         this.accountRepository.delete(account.get());
         this.data.put("account", account.get());
         return this.buildSuccessResponse("Cuenta eliminada exitosamente", this.data);
+    }
+
+    @Override
+    public ResponseEntity<AccountResponse> listAccount() {
+        this.initEndPoint("GET", "/v1/accounts");
+        List<Account> accounts = this.accountRepository.findAll(Sort.by(Sort.Order.asc("updated_at")));
+        this.data.put("accounts", accounts);
+        return this.buildSuccessResponse("", this.data);
     }
 
 }

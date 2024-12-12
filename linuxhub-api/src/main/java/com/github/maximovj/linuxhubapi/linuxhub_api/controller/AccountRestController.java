@@ -29,6 +29,12 @@ public class AccountRestController implements IAccountServiceImpl
     @Autowired
     private IAccountServiceImpl serviceImpl;
 
+    @GetMapping("/accounts")
+    @Override
+    public ResponseEntity<AccountResponse> listAccount() {
+        return this.serviceImpl.listAccount();
+    }
+    
     @PostMapping("/accounts")
     @Override
     public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody AccountRequest body) {
@@ -46,5 +52,5 @@ public class AccountRestController implements IAccountServiceImpl
     public ResponseEntity<AccountResponse> deleteAccount(@PathVariable String id) {
         return this.serviceImpl.deleteAccount(id);
     }
-    
+
 }
