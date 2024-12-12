@@ -12,6 +12,7 @@ import com.github.maximovj.linuxhubapi.linuxhub_api.document.Distribution;
 import com.github.maximovj.linuxhubapi.linuxhub_api.repository.DistributionRepository;
 import com.github.maximovj.linuxhubapi.linuxhub_api.response.ComparationResponse;
 import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IComparationServiceImpl;
+import com.github.maximovj.linuxhubapi.linuxhub_api.service.utils.ComparativeUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -96,45 +97,33 @@ public class ComparationServiceImpl implements IComparationServiceImpl
             this.errors.put("id_after", "El id_after no encontrado en el sistema");
             return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops distribuciones no encontrados en el sistema", errors);
         }
+
+        ComparativeUtil comparative = ComparativeUtil.builder()
+            .distro_after(distro_after.get())
+            .distro_before(distro_before.get())
+            .build();
+
+        if(comparative.getTechnicianBefore() != null) {
+            this.data.put(
+                distro_before.get().getId(), 
+                comparative.getTechnician(comparative.getTechnicianBefore())
+            );
+        }
         
-        /* 
-        HashMap<String, Object> dataBeforeDistro = new HashMap<>();
-        if(distro_before.get().getTechnician() != null) {
-            dataBeforeDistro.put("ram", distro_before.get().getTechnician().getRam());
-            dataBeforeDistro.put("memory", distro_before.get().getTechnician().getMemory());
-            dataBeforeDistro.put("process", distro_before.get().getTechnician().getProcess());
-            this.data.put(distro_before.get().getName(), dataBeforeDistro);
+        if(comparative.getTechnicianAfter() != null) {
+            this.data.put(
+                distro_after.get().getId(), 
+                comparative.getTechnician(comparative.getTechnicianAfter())
+            );
         }
 
-        HashMap<String, Object> dataAfterDistro = new HashMap<>();
-        if(distro_after.get().getTechnician() != null) {
-            dataAfterDistro.put("ram", distro_after.get().getTechnician().getRam());
-            dataAfterDistro.put("memory", distro_after.get().getTechnician().getMemory());
-            dataAfterDistro.put("process", distro_after.get().getTechnician().getProcess());
-            this.data.put(distro_after.get().getName(), dataAfterDistro);
+        if( comparative.getTechnicianBefore() != null &&
+            comparative.getTechnicianAfter() != null) {
+            this.data.put("suggest", comparative.getSuggest());
+            this.data.put("comparative", comparative.getComparative());
         }
-
-        if(distro_before.get().getTechnician() != null &&
-        distro_after.get().getTechnician() != null) {
-            HashMap<String, Object> better = new HashMap<>();
-            better.put("ram", this.comparationRam(distro_before.get().getTechnician(), distro_after.get().getTechnician()));
-            better.put("memory", this.comparationMemory(distro_before.get().getTechnician(), distro_after.get().getTechnician()));
-            better.put("proccess", "AMD 2");
-            this.data.put("better", better);
-        }
-        */
 
         return this.buildSuccessResponse("Comparado exitosamnte", this.data);
     }
-
-    private Long comparationRam(Technician a, Technician b)
-    {
-        return a.getRam() < b.getRam() ? a.getRam() : b.getRam();
-    }
-
-    private Long comparationDisk(Technician a, Technician b)
-    {
-        return a.getDisk() < b.getDisk() ? a.getDisk() : b.getDisk();
-    }    
     
 }
