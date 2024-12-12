@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidEnum {
-    String message() default "El valor debe ser uno de los valores permitidos en el enum";
+    String message() default "";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
     Class<? extends Enum<?>> enumClass(); // Parámetro para pasar el Enum
