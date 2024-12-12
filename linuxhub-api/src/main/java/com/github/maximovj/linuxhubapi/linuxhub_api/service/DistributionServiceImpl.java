@@ -32,15 +32,15 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
         this.apiResponse = new DistributionResponse();
         this.apiResponse.setType(type);
         this.apiResponse.setUri(uri);
-        this.apiResponse.setBase_url("http://localhot:5808"+uri);
+        this.apiResponse.setBaseUrl("http://localhot:5808"+uri);
         this.data = new HashMap<>();
         this.errors = new HashMap<>();
     }
 
     public ResponseEntity<DistributionResponse> buildSuccessResponse(String content, HashMap<String,Object> data) 
     {
-        this.apiResponse.setRes_title("API Distribution");
-        this.apiResponse.setRes_content(content);
+        this.apiResponse.setResTitle("API Distribution");
+        this.apiResponse.setResContent(content);
         this.apiResponse.setCode(HttpStatus.OK.value());
         this.apiResponse.setStatus("success");
         this.apiResponse.setSuccess(true);
@@ -50,8 +50,8 @@ public class DistributionServiceImpl implements IDistributionServiceImpl
 
     public ResponseEntity<DistributionResponse> buildErrorResponse(HttpStatus status, String content,  HashMap<String, Object> errors) 
     {
-        this.apiResponse.setRes_title("API Distribution");
-        this.apiResponse.setRes_content(content);
+        this.apiResponse.setResTitle("API Distribution");
+        this.apiResponse.setResContent(content);
         this.apiResponse.setCode(status.value());
         this.apiResponse.setStatus("error");
         this.apiResponse.setSuccess(false);

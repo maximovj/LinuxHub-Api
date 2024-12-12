@@ -35,15 +35,15 @@ public class ComparationServiceImpl implements IComparationServiceImpl
         this.apiResponse = new ComparationResponse();
         this.apiResponse.setType(type);
         this.apiResponse.setUri(uri);
-        this.apiResponse.setBase_url("http://localhost:5808"+uri);
+        this.apiResponse.setBaseUrl("http://localhost:5808"+uri);
         this.data = new HashMap<>();
         this.errors = new HashMap<>();
     }
 
     private ResponseEntity<ComparationResponse> buildSuccessResponse(String content, HashMap<String, Object> data)
     {
-        this.apiResponse.setRes_title("API Comparation");
-        this.apiResponse.setRes_content(content);
+        this.apiResponse.setResTitle("API Comparation");
+        this.apiResponse.setResContent(content);
         this.apiResponse.setCode(HttpStatus.OK.value());
         this.apiResponse.setStatus("success");
         this.apiResponse.setSuccess(true);
@@ -53,8 +53,8 @@ public class ComparationServiceImpl implements IComparationServiceImpl
 
     private ResponseEntity<ComparationResponse> buildErrorResponse(HttpStatus status, String content, HashMap<String, Object> errors)
     {
-        this.apiResponse.setRes_title("API Comparation");
-        this.apiResponse.setRes_content(content);
+        this.apiResponse.setResTitle("API Comparation");
+        this.apiResponse.setResContent(content);
         this.apiResponse.setCode(status.value());
         this.apiResponse.setStatus("error");
         this.apiResponse.setSuccess(false);

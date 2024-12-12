@@ -38,15 +38,15 @@ public class AccountServiceImpl implements IAccountServiceImpl
         this.apiResponse = new AccountResponse();
         this.apiResponse.setType(type);
         this.apiResponse.setUri(uri);
-        this.apiResponse.setBase_url("http://localhost:5808"+uri);
+        this.apiResponse.setBaseUrl("http://localhost:5808"+uri);
         this.data = new HashMap<>();
         this.errors = new HashMap<>();
     }
 
     private ResponseEntity<AccountResponse> buildSuccessResponse(String content, HashMap<String, Object> data)
     {
-        this.apiResponse.setRes_title("API Accounts");
-        this.apiResponse.setRes_content(content);
+        this.apiResponse.setResTitle("API Accounts");
+        this.apiResponse.setResContent(content);
         this.apiResponse.setCode(HttpStatus.OK.value());
         this.apiResponse.setStatus("success");
         this.apiResponse.setSuccess(true);
@@ -56,8 +56,8 @@ public class AccountServiceImpl implements IAccountServiceImpl
 
     private ResponseEntity<AccountResponse> buildErrorResponse(HttpStatus status, String content, HashMap<String, Object> errors)
     {
-        this.apiResponse.setRes_title("API Accounts");
-        this.apiResponse.setRes_content(content);
+        this.apiResponse.setResTitle("API Accounts");
+        this.apiResponse.setResContent(content);
         this.apiResponse.setCode(status.value());
         this.apiResponse.setStatus("error");
         this.apiResponse.setSuccess(false);

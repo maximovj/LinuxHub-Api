@@ -3,6 +3,7 @@ package com.github.maximovj.linuxhubapi.linuxhub_api.response;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,17 +15,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.ALWAYS)
-public class ApiResponse 
+public class ApiResponse
 {
     
-    String res_title;
-    String res_content;
+    @JsonProperty("res_title")
+    String resTitle;
+    
+    @JsonProperty("res_content")
+    String resContent;
+    
     String uri;
-    String base_url;
+    
+    @JsonProperty("base_url")
+    String baseUrl;
+    
     String type;
+    
     String status;
+    
     Integer code;
+    
     Boolean success;
+    
     HashMap<String, Object> data;
+    
     HashMap<String, Object> errors;    
+
 }
