@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.maximovj.linuxhubapi.linuxhub_api.request.AccountRequest;
+import com.github.maximovj.linuxhubapi.linuxhub_api.request.UpdateAccountRequest;
 import com.github.maximovj.linuxhubapi.linuxhub_api.response.AccountResponse;
 import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IAccountServiceImpl;
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -39,6 +42,12 @@ public class AccountRestController implements IAccountServiceImpl
     @Override
     public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody AccountRequest body) {
         return this.serviceImpl.createAccount(body);
+    }
+
+    @PutMapping("/accounts/{id}")
+    @Override
+    public ResponseEntity<AccountResponse> updateAccount(@PathVariable String id, @Valid @RequestBody UpdateAccountRequest body) {
+        return this.serviceImpl.updateAccount(id, body);
     }
 
     @GetMapping("/accounts/{id}")

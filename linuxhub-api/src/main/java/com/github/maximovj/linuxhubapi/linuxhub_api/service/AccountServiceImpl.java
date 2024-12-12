@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import com.github.maximovj.linuxhubapi.linuxhub_api.data.account.State;
 import com.github.maximovj.linuxhubapi.linuxhub_api.document.Account;
 import com.github.maximovj.linuxhubapi.linuxhub_api.repository.AccountRepository;
 import com.github.maximovj.linuxhubapi.linuxhub_api.request.AccountRequest;
+import com.github.maximovj.linuxhubapi.linuxhub_api.request.UpdateAccountRequest;
 import com.github.maximovj.linuxhubapi.linuxhub_api.response.AccountResponse;
 import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IAccountServiceImpl;
 
@@ -74,6 +76,13 @@ public class AccountServiceImpl implements IAccountServiceImpl
     private boolean isValidRole(String role) {
         // Verifica que el rol sea válido según la enumeración
         return role != null && Arrays.asList(Role.values()).contains(Role.valueOf(role));
+    }
+
+    // Método utilitario
+    private <T> void updateIfNotEmpty(String value, Consumer<String> setter) {
+        if (value != null && !value.isEmpty()) {
+            setter.accept(value);
+        }
     }
 
     @Override
@@ -186,11 +195,55 @@ public class AccountServiceImpl implements IAccountServiceImpl
     }
 
     @Override
-    public ResponseEntity<AccountResponse> listAccount() {
+    public ResponseEntity<AccountResponse> listAccount() 
+    {
         this.initEndPoint("GET", "/v1/accounts");
         List<Account> accounts = this.accountRepository.findAll(Sort.by(Sort.Order.asc("updated_at")));
         this.data.put("accounts", accounts);
-        return this.buildSuccessResponse("", this.data);
+        return this.buildSuccessResponse("Listar todas las cuentas", this.data);
+    }
+
+    @Override
+    public ResponseEntity<AccountResponse> updateAccount(String id, UpdateAccountRequest body) 
+    {
+        this.initEndPoint("PUT", "/v1/accounts/" + id);
+        if(body == null) {
+            this.errors.put("body", "El body es requerido");
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "No hay cuerpo de la solicitud", this.errors);
+        }
+        
+        // Verificar que los campos "emal", "username" no estan registrados
+        List<Account> accounts = this.accountRepository.findByEmailOrUsername(body.getEmail(), body.getUsername());
+        if(accounts.size() > 1) {
+            this.errors.put("email", "El email no disponible");
+            this.errors.put("username", "El username no disponible");
+            return this.buildErrorResponse(HttpStatus.CONFLICT, "Oops correo electrónico y/o cuenta de usuario no disponibles", errors);
+        }
+
+        Optional<Account> find_account = this.accountRepository.findById(id);
+        if(!find_account.isPresent()) {
+            this.errors.put("cuenta", "La cuenta no fue encontrada");
+            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops cuenta no encontrada en el sistema", this.errors);
+        }
+
+        // Encriptar la contraseña
+        if(body.getPassword() != null) {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String password = passwordEncoder.encode(body.getPassword());
+            body.setPassword(password);
+        }
+
+        Account account = find_account.get();
+        updateIfNotEmpty(body.getAvatar(), account::setAvatar);
+        updateIfNotEmpty(body.getUsername(), account::setUsername);
+        updateIfNotEmpty(body.getEmail(), account::setEmail);
+        updateIfNotEmpty(body.getPassword(), account::setPassword);
+        updateIfNotEmpty(body.getRole(), role -> account.setRole(Role.valueOf(role)));
+        updateIfNotEmpty(body.getState(), state -> account.setState(State.valueOf(state)));
+
+        this.accountRepository.save(account);
+        this.data.put("account", account);
+        return this.buildSuccessResponse("Cuenta actualizada exitosamente", this.data);
     }
 
 }
