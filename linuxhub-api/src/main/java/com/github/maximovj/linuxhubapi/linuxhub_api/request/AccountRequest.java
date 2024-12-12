@@ -1,5 +1,9 @@
 package com.github.maximovj.linuxhubapi.linuxhub_api.request;
 
+import com.github.maximovj.linuxhubapi.linuxhub_api.data.account.Role;
+import com.github.maximovj.linuxhubapi.linuxhub_api.validation.valid_enum.ValidEnum;
+import com.github.maximovj.linuxhubapi.linuxhub_api.validation.valid_role.ValidRole;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -32,7 +36,7 @@ public class AccountRequest
     String password;
     
     @NotNull(message = "role es obligatorio")
-    @Pattern(regexp = "admin|maintainer|user|guest", message = "El rol debe ser uno de: admin, maintainer, user, guest")
+    @ValidEnum(enumClass = Role.class, message = "El rol debe ser uno de: admin, maintainer, user, guest")
     String role;
     
     @NotNull(message = "state es obligatorio")
