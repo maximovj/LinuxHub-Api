@@ -2,6 +2,7 @@ package com.github.maximovj.linuxhubapi.linuxhub_api.request;
 
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.account.Role;
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.account.State;
+import com.github.maximovj.linuxhubapi.linuxhub_api.validation.strong_password.StrongPassword;
 import com.github.maximovj.linuxhubapi.linuxhub_api.validation.valid_enum.ValidEnum;
 import com.github.maximovj.linuxhubapi.linuxhub_api.validation.valid_role.ValidRole;
 
@@ -26,7 +27,7 @@ public class AccountRequest
     @NotEmpty(message = "username es requerido")
     @Pattern(regexp = "^[a-zA-Z0-9_-]+$", 
     message = "username no tiene un formato válido")
-    @Size(min = 8, max = 26, message = "Se requiere entre 8 y 26 carácteres")
+    @Size(min = 4, max = 24, message = "Se requiere entre 4 y 24 carácteres")
     String username;
     
     @NotEmpty(message = "email es requerido")
@@ -35,6 +36,7 @@ public class AccountRequest
     
     @NotEmpty(message = "password es requerido")
     @Size(min = 8, max = 26, message = "Se requiere entre 8 y 26 carácteres")
+    @StrongPassword
     String password;
     
     @NotEmpty(message = "role es requerido")
