@@ -2,15 +2,16 @@ package com.github.maximovj.linuxhubapi.linuxhub_api.document;
 
 import java.time.Instant;
 
-import javax.management.relation.Role;
-
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.maximovj.linuxhubapi.linuxhub_api.data.account.Role;
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.account.State;
 import com.mongodb.lang.Nullable;
 
@@ -34,21 +35,21 @@ public class Account {
     @Nullable
     String avatar;
 
+    @Indexed(unique = true)
     @Field("username")
-    @Nullable
     String username;
 
+    @Indexed(unique = true)
     @Field("email")
-    @Nullable
     String email;
     
     @Field("password")
-    @Nullable
+    @JsonIgnore
     String password;
-
+    
     @Field("role")
     Role role;
-
+    
     @Field("state")
     State state;
 
