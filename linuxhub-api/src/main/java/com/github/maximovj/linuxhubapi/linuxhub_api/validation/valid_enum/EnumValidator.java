@@ -8,19 +8,22 @@ import java.util.stream.Stream;
 
 public class EnumValidator implements ConstraintValidator<ValidEnum, String> {
 
+
     private Class<? extends Enum<?>> enumClass;
     private String message;
+    private boolean nullable;
 
     @Override
     public void initialize(ValidEnum constraintAnnotation) {
         this.enumClass = constraintAnnotation.enumClass();
         this.message = constraintAnnotation.message(); // Obtener el mensaje personalizado de la anotación
+        this.nullable = constraintAnnotation.nullable();
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
-            return true; // Permitir valores nulos; cámbialo según tus requisitos
+            return nullable; // Permitir valores nulos; cámbialo según tus requisitos
         }
 
         // Verifica si el valor coincide con algún nombre del enum (case-insensitive)

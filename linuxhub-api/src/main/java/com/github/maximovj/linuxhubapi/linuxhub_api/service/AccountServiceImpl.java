@@ -17,7 +17,7 @@ import com.github.maximovj.linuxhubapi.linuxhub_api.data.account.Role;
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.account.State;
 import com.github.maximovj.linuxhubapi.linuxhub_api.document.Account;
 import com.github.maximovj.linuxhubapi.linuxhub_api.repository.AccountRepository;
-import com.github.maximovj.linuxhubapi.linuxhub_api.request.AccountRequest;
+import com.github.maximovj.linuxhubapi.linuxhub_api.request.CreateAccountRequest;
 import com.github.maximovj.linuxhubapi.linuxhub_api.request.UpdateAccountRequest;
 import com.github.maximovj.linuxhubapi.linuxhub_api.response.AccountResponse;
 import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IAccountServiceImpl;
@@ -86,7 +86,7 @@ public class AccountServiceImpl implements IAccountServiceImpl
     }
 
     @Override
-    public ResponseEntity<AccountResponse> createAccount(AccountRequest body) {
+    public ResponseEntity<AccountResponse> createAccount(CreateAccountRequest body) {
         this.initEndPoint("POST", "/v1/accounts");
         
         // Verificar que el body no sea vacío

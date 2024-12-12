@@ -5,15 +5,18 @@ import jakarta.validation.ConstraintValidatorContext;
 
 public class StrongPasswordValidator implements ConstraintValidator<StrongPassword, String> {
 
+    private boolean nullable;
+
     @Override
     public void initialize(StrongPassword constraintAnnotation) {
         // Aquí podrías hacer alguna inicialización si fuera necesario
+        this.nullable = constraintAnnotation.nullable();
     }
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         if (password == null) {
-            return false;
+            return nullable;
         }
 
         // Verificar que la contraseña tiene al menos una letra mayúscula

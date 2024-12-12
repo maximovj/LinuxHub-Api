@@ -12,6 +12,7 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = StrongPasswordValidator.class) // Define el validador
 public @interface StrongPassword {
+    boolean nullable() default true;
     String message() default "La contraseña es débil, debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.maximovj.linuxhubapi.linuxhub_api.request.AccountRequest;
+import com.github.maximovj.linuxhubapi.linuxhub_api.request.CreateAccountRequest;
 import com.github.maximovj.linuxhubapi.linuxhub_api.request.UpdateAccountRequest;
 import com.github.maximovj.linuxhubapi.linuxhub_api.response.AccountResponse;
 import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IAccountServiceImpl;
@@ -40,7 +40,7 @@ public class AccountRestController implements IAccountServiceImpl
     
     @PostMapping("/accounts")
     @Override
-    public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody AccountRequest body) {
+    public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest body) {
         return this.serviceImpl.createAccount(body);
     }
 
