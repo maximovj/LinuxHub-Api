@@ -13,5 +13,8 @@ public interface IAccountServiceImpl
 
     // Buscar/Leer una cuenta usando su _id
     public ResponseEntity<AccountResponse> findAccount(String id);
+
+    // Eliminar una cuenta usando su _id
+    public ResponseEntity<AccountResponse> deleteAccount(String id);
     
 }
