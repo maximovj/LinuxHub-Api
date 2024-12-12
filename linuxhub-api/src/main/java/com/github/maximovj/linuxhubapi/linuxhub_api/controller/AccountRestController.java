@@ -14,6 +14,10 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -28,6 +32,12 @@ public class AccountRestController implements IAccountServiceImpl
     @Override
     public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody AccountRequest body) {
         return this.serviceImpl.createAccount(body);
+    }
+
+    @GetMapping("/accounts/{id}")
+    @Override
+    public ResponseEntity<AccountResponse> findAccount(@PathVariable String id) {
+        return this.serviceImpl.findAccount(id);
     }
     
 }

@@ -144,4 +144,24 @@ public class AccountServiceImpl implements IAccountServiceImpl
         return this.buildSuccessResponse("Cuenta creada exitosamente", this.data);
     }
 
+    @Override
+    public ResponseEntity<AccountResponse> findAccount(String id) 
+    {
+        this.initEndPoint("GET", "/v1/accounts/" + id);
+
+        if(id.isEmpty()) {
+            this.errors.put("id", "La cuenta id es requerido");
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops cuenta no proporcionada", this.errors);
+        }
+
+        Optional<Account> account = this.accountRepository.findById(id);
+        if(!account.isPresent()) {
+            this.errors.put("id", "La cuenta id no existe en el sistema");
+            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops cuenta no encontrada en el sistema", this.errors);
+        }
+
+        this.data.put("account", account.get());
+        return this.buildSuccessResponse("Cuenta localizada correctamente", this.data);
+    }
+
 }

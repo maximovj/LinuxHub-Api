@@ -10,5 +10,8 @@ public interface IAccountServiceImpl
     
     // Crear una cuenda usando el body
     public ResponseEntity<AccountResponse> createAccount(AccountRequest body);
+
+    // Buscar/Leer una cuenta usando su _id
+    public ResponseEntity<AccountResponse> findAccount(String id);
     
 }
