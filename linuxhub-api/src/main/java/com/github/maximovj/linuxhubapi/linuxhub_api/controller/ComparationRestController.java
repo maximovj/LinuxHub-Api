@@ -21,6 +21,7 @@ public class ComparationRestController implements IComparationServiceImpl
     private IComparationServiceImpl serviceImpl;
 
     @GetMapping("/comparation/{id_before}/between/{id_after}")
+    @Override
     public ResponseEntity<ComparationResponse> distributionCompration(@PathVariable String id_before, @PathVariable String id_after) 
     {
         return this.serviceImpl.distributionCompration(id_before, id_after);    

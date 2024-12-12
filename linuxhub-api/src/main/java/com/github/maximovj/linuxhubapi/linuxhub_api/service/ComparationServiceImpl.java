@@ -62,23 +62,6 @@ public class ComparationServiceImpl implements IComparationServiceImpl
         return ResponseEntity.status(status).body(this.apiResponse);
     }
 
-    private long convertToMB(String size) {
-        if (size == null || size.isEmpty()) {
-            return 0;
-        }
-        size = size.trim().toUpperCase();
-    
-        if (size.endsWith("GB")) {
-            return (long) (Double.parseDouble(size.replace("GB", "").trim()) * 1024);
-        } else if (size.endsWith("MB")) {
-            return (long) Double.parseDouble(size.replace("MB", "").trim());
-        } else if (size.endsWith("TB")) {
-            return (long) (Double.parseDouble(size.replace("TB", "").trim()) * 1024 * 1024);
-        }
-    
-        throw new IllegalArgumentException("Unsupported size format: " + size);
-    }
-
     @Override
     public ResponseEntity<ComparationResponse> distributionCompration(String id_before, String id_after) {
         this.initEndPoint("GET", "/comparation/"+id_before+"/between"+"/"+id_after);
