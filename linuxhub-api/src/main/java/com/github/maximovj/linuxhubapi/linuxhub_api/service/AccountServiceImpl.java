@@ -65,14 +65,14 @@ public class AccountServiceImpl implements IAccountServiceImpl
         return ResponseEntity.status(status).body(this.apiResponse);
     }
 
-    private boolean isValidState(State state) {
+    private boolean isValidState(String state) {
         // Verifica que el estado sea válido según la enumeración
-        return state != null && Arrays.asList(State.values()).contains(state);
+        return state != null && Arrays.asList(State.values()).contains(State.valueOf(state));
     }
 
-    private boolean isValidRole(Role role) {
+    private boolean isValidRole(String role) {
         // Verifica que el rol sea válido según la enumeración
-        return role != null && Arrays.asList(Role.values()).contains(role);
+        return role != null && Arrays.asList(Role.values()).contains(Role.valueOf(role));
     }
 
     @Override
@@ -85,7 +85,6 @@ public class AccountServiceImpl implements IAccountServiceImpl
             return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops el cuerpo no existe", errors);
         }
 
-        /* 
         // Verificar que los campos "State", "Role", "Password" no esten vacíos
         if(body.getState() == null || body.getRole() == null || body.getPassword().isEmpty()) {
             this.errors.put("state", "El state es requerido");
@@ -104,7 +103,6 @@ public class AccountServiceImpl implements IAccountServiceImpl
         } catch (Exception e) {
             return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops role y/o state no son válidos", errors);
         }
-        */
 
         // Verificar que los campos "emal", "username" no esten vacíos
         if(body.getEmail().isEmpty() || body.getUsername().isEmpty()) {
@@ -133,9 +131,17 @@ public class AccountServiceImpl implements IAccountServiceImpl
         String encryptedPassword = passwordEncoder.encode(body.getPassword());
         body.setPassword(encryptedPassword);
 
-        //this.accountRepository.save(body);
-        this.data.put("account", body);
-        return this.buildSuccessResponse("Funciona", this.data);
+        Account new_account = new Account();
+        new_account.setAvatar(body.getAvatar());
+        new_account.setUsername(body.getUsername());
+        new_account.setEmail(body.getEmail());
+        new_account.setPassword(body.getPassword());
+        new_account.setRole(Role.valueOf(body.getRole()));
+        new_account.setState(State.valueOf(body.getState()));
+        this.accountRepository.save(new_account);
+
+        this.data.put("account", new_account);
+        return this.buildSuccessResponse("Cuenta creada exitosamente", this.data);
     }
 
 }
