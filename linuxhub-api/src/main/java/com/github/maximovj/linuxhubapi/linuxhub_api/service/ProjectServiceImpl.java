@@ -97,5 +97,25 @@ implements IProjectServiceImpl
         this.data.put("project", project);
         return this.buildSuccessResponse(HttpStatus.OK, "Proyecto actualizado correctamente.");
     }
+
+    @Override
+    public ResponseEntity<ProjectResponse> deleteProject(String id) {
+        this.initEndPoint("DELETE", "/v1/projects/" + id);
+
+        if(id.isEmpty()) {
+            this.errors.put("id", "El proyecto id es requerido");
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops proyecto id es requerido");
+        }
+        
+        Optional<Project> find_project = this.projectRespository.findById(id);
+        if(!find_project.isPresent()) {
+            this.errors.put("project", "El proyecto no existe");
+            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops proyecto no fue encontrada en el sistema");
+        }
+
+        this.projectRespository.delete(find_project.get());
+        this.data.put("project", find_project.get());
+        return this.buildSuccessResponse(HttpStatus.OK, "Proyecto eliminado correctamente");
+    }
     
 }

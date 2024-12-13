@@ -11,6 +11,7 @@ import com.github.maximovj.linuxhubapi.linuxhub_api.request.UpdateProjectRequest
 import com.github.maximovj.linuxhubapi.linuxhub_api.response.ProjectResponse;
 import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IProjectServiceImpl;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,12 @@ public class ProjectRestController implements IProjectServiceImpl
     public ResponseEntity<ProjectResponse> updateProject(@PathVariable String id, @Validated @RequestBody UpdateProjectRequest body) 
     {
         return this.serviceImpl.updateProject(id, body);
+    }
+
+    @DeleteMapping("/projects/{id}")
+    @Override
+    public ResponseEntity<ProjectResponse> deleteProject(@PathVariable String id) {
+        return this.serviceImpl.deleteProject(id);
     }
     
 }

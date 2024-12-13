@@ -12,6 +12,9 @@ public interface IProjectServiceImpl
     public ResponseEntity<ProjectResponse> createProject(CreateProjectRequest body);
     
     // Modificar un proyecto usando el id y el body
-    public ResponseEntity<ProjectResponse> updateProject(String id, UpdateProjectRequest body); 
+    public ResponseEntity<ProjectResponse> updateProject(String id, UpdateProjectRequest body);
+
+    // Eliminar un proyeco usando el id 
+    public ResponseEntity<ProjectResponse> deleteProject(String id); 
 
 }
