@@ -8,6 +8,10 @@ import com.github.maximovj.linuxhubapi.linuxhub_api.response.ProjectResponse;
 
 public interface IProjectServiceImpl 
 {
+    
+    // Listar todos los proyectos
+    public ResponseEntity<ProjectResponse> listProject();
+    
     // Crear un nuevo proyecto usando el body
     public ResponseEntity<ProjectResponse> createProject(CreateProjectRequest body);
     
