@@ -2,6 +2,7 @@ package com.github.maximovj.linuxhubapi.linuxhub_api.service.utils;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +58,13 @@ public class BuildResponseApi<T extends ApiResponse> {
         this.apiResponse.setData(null);
         this.apiResponse.setErrors(this.errors);
         return ResponseEntity.status(status).body(this.apiResponse);
+    }
+
+    // Método utilitario
+    protected <T> void updateIfNotEmpty(String value, Consumer<String> setter) {
+        if (value != null && !value.isEmpty()) {
+            setter.accept(value);
+        }
     }
 
 }

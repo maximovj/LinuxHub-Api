@@ -7,12 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.github.maximovj.linuxhubapi.linuxhub_api.data.account.Role;
 import com.github.maximovj.linuxhubapi.linuxhub_api.data.project.Environment;
 import com.github.maximovj.linuxhubapi.linuxhub_api.document.Account;
 import com.github.maximovj.linuxhubapi.linuxhub_api.document.Project;
 import com.github.maximovj.linuxhubapi.linuxhub_api.repository.AccountRepository;
 import com.github.maximovj.linuxhubapi.linuxhub_api.repository.ProjectRespository;
 import com.github.maximovj.linuxhubapi.linuxhub_api.request.CreateProjectRequest;
+import com.github.maximovj.linuxhubapi.linuxhub_api.request.UpdateProjectRequest;
 import com.github.maximovj.linuxhubapi.linuxhub_api.response.ProjectResponse;
 import com.github.maximovj.linuxhubapi.linuxhub_api.service.interfaces.IProjectServiceImpl;
 import com.github.maximovj.linuxhubapi.linuxhub_api.service.utils.BuildResponseApi;
@@ -60,6 +62,40 @@ implements IProjectServiceImpl
         this.projectRespository.save(project);
         this.data.put("project", body);
         return this.buildSuccessResponse(HttpStatus.CREATED, "Proyecto creado exitosamente");
+    }
+
+    @Override
+    public ResponseEntity<ProjectResponse> updateProject(String id, UpdateProjectRequest body) {
+        this.initEndPoint("PUT", "/v1/projects/" + id);
+
+        if(body == null) {
+            this.errors.put("body", "El body es requerido");
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops no hay body");
+        }
+
+        if(id.isEmpty()) {
+            this.errors.put("id", "El proyecto id es requerido");
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops proyecto id es requerido");
+        }
+        
+        Optional<Project> find_project = this.projectRespository.findById(id);
+        if(!find_project.isPresent()) { 
+            this.errors.put("project", "El proyecto no existe");
+            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops proyecto no encontrado en el sistema");
+        }
+
+        Project project = find_project.get();
+        this.updateIfNotEmpty(body.getCover(), project::setCover);
+        this.updateIfNotEmpty(body.getName() , project::setName);
+        this.updateIfNotEmpty(body.getDescription(), project::setDescription);
+        this.updateIfNotEmpty(body.getBase_url(), project::setBaseUrl);
+        this.updateIfNotEmpty(body.getHost(), project::setHost);
+        this.updateIfNotEmpty(body.getEnvironment() , environment -> project.setEnvironment(Environment.valueOf(environment)));
+        this.updateIfNotEmpty(body.getAccount_id(), project::setAccountId);
+        
+        this.projectRespository.save(project);
+        this.data.put("project", project);
+        return this.buildSuccessResponse(HttpStatus.OK, "Proyecto actualizado correctamente.");
     }
     
 }
