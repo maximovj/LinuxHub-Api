@@ -39,6 +39,11 @@ public class ApiResponse
     
     HashMap<String, Object> data;
     
-    HashMap<String, Object> errors;    
+    HashMap<String, Object> errors;
+
+    public void setBaseUrl(String baseUrl)
+    {
+        this.baseUrl = "http://localhost:5808" + baseUrl;
+    }
 
 }
