@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/v1")
@@ -41,8 +44,16 @@ public class ProjectRestController implements IProjectServiceImpl
 
     @DeleteMapping("/projects/{id}")
     @Override
-    public ResponseEntity<ProjectResponse> deleteProject(@PathVariable String id) {
+    public ResponseEntity<ProjectResponse> deleteProject(@PathVariable String id) 
+    {
         return this.serviceImpl.deleteProject(id);
+    }
+
+    @GetMapping("/projects/{id}")
+    @Override
+    public ResponseEntity<ProjectResponse> findProject(@PathVariable String id) 
+    {
+        return this.serviceImpl.findProject(id);
     }
     
 }
