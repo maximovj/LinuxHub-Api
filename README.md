@@ -22,6 +22,7 @@ Este es el conjunto de tecnologías y características para este aplicación web
 
 # Requisitos
 
+- Maven 3.6.3
 - Spring Boot v3.4.0
 - Java 1.8.0
 - JDK 17
