@@ -3,7 +3,9 @@ import { Component } from "@angular/core";
 @Component({
   styles: ``,
   template: `
-    <h1>Hola mundo</h1>
+    <h1 class="text-3xl font-bold underline">
+      Hello world!
+    </h1>
   `,
 })
 export class HomePageComponent
