@@ -27,7 +27,7 @@ import { CommonModule } from "@angular/common";
             <p class="text-center font-bold text-base">Sin distribuciones que mostrar <mark>:'(</mark></p>
           } @else {
             <ng-container>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="container m-auto grid grid-cols-1 md:grid-cols-3 gap-10">
               @for (item of res.data; track $index) {
                 <div class="flex flex-row justify-start gap-4 bg-slate-600 text-white border-2 border-red-900 rounded shadow-lg shadow-slate-700">
                   <div class="bg-slate-800">
