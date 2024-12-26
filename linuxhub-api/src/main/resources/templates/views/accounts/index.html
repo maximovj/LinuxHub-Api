@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/base :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+</head>
+<body>
+    <nav th:replace= "~{layout/base :: header}"></nav>
+    <main class="container"> 
+        <span class="d-block h1">Página de cuentas</span>
+        <table class="table table-striped table-hover table-responsive">
+            <thead class="table table-dark">
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">State</th>
+                <th scope="col">Created at</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr th:each= "item:${accounts}">
+                <th scope="row" th:text="${item.id}">id</th>
+                <th scope="row" th:text="${item.username}">username</th>
+                <th scope="row" th:text="${item.email}">email</th>
+                <th scope="row" th:text="${item.role}">role</th>
+                <th scope="row" th:text="${item.state}">state</th>
+                <th scope="row" th:text="${item.created_at}">created_at</th>
+              </tr>
+            </tbody>
+          </table>
+    </main>
+    <footer th:replace= "~{layout/base :: footer}"></footer>
+</body>
+</html>
