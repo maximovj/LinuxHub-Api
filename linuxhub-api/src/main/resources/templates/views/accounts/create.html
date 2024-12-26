@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/base :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crear cuenta</title>
+</head>
+<body>
+    <nav th:replace="layout/base :: header"></nav>
+    <main class="container my-4">
+        <div class="card bg-light">
+            <div class="card-header bg-dark text-white">Crear una cuenta</div>
+            <div class="card-body">
+                <form th:object="${account}">
+                    <div class="input-group mb-3">
+                        <label for="username" class="form-label">Nombre de usuario</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <input type="text" th:field="*{username}" class="form-control" id="username" name="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input type="email" th:field="*{username}" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">Escribe un correo válido</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" th:field="*{password}" class="form-control" id="password" name="password" aria-describedby="passwordHelp" required >
+                        <div id="passwordHelp" class="form-text">Use guiones, simbolos, números</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" aria-describedby="confirmPasswordHelp" required>
+                        <div id="confirmPasswordHelp" class="form-text">Use guiones, simbolos, números</div>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select form-select" aria-label="Small select example" required>
+                            <option selected disabled>Elige un rol de usuario...</option>
+                            <option value="admin">Administrador</option>
+                            <option value="guess">Invitado</option>
+                            <option value="mainteiner">Mantenedor</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select form-select" aria-label="Small select example" required>
+                            <option selected disabled>Elige un estado de usuario...</option>
+                            <option value="active">Activo</option>
+                            <option value="blocked">Bloqueado</option>
+                            <option value="disabled">Desactivado</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="layout/base :: footer"></footer>
+</body>
+</html>
